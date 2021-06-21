@@ -1,0 +1,7 @@
+# Environments
+.venv
+.idea
+
+# stuff
+db.sqlite3
+*.log
