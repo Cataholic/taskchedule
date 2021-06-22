@@ -6,19 +6,16 @@ import netifaces
 
 
 class Message:
-    # def __init__(self, myidpath):
-    #     """从文件中读取主机的uuid"""
-    #     if os.path.exists(myidpath):
-    #         with open(myidpath) as f:
-    #             self.id = f.readline().strip()
-    #     else:
-    #         self.id = uuid.uuid4().hex
-    #         with open(myidpath, 'w') as f:
-    #             f.write(self.id)
-
-    def __init__(self):
-        self.id = uuid.uuid4().hex
-
+    def __init__(self, myidpath):
+        """从文件中读取主机的uuid"""
+        if os.path.exists(myidpath):
+            with open(myidpath) as f:
+                self.id = f.readline().strip()
+        else:
+            self.id = uuid.uuid4().hex
+            with open(myidpath, 'w') as f:
+                f.write(self.id)
+        print(self.id)
 
     def _get_addresses(self):
         """获取主机上所有接口可用的IPv4地址"""
