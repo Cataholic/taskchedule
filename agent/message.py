@@ -15,7 +15,6 @@ class Message:
             self.id = uuid.uuid4().hex
             with open(myidpath, 'w') as f:
                 f.write(self.id)
-        print(self.id)
 
     def _get_addresses(self):
         """获取主机上所有接口可用的IPv4地址"""
@@ -44,7 +43,7 @@ class Message:
     def reg(self):
         """生成注册信息"""
         return {
-            "type": 'register',
+            "type": "register",
             "payload": {
                 "id": self.id,
                 "hostname": socket.gethostname(),
@@ -55,10 +54,21 @@ class Message:
     def heartbeat(self):
         """生成心跳信息"""
         return {
-            "type": 'heartbeat',
+            "type": "heartbeat",
             "payload": {
                 "id": self.id,
                 "hostname": socket.gethostname(),
                 "ip": self._get_addresses()
+            }
+        }
+
+    def result(self, task_id, code, output):
+        return {
+            "type": "result",
+            "payload": {
+                "id": task_id,
+                "agent_id": self.id,
+                "code": code,
+                "output": output
             }
         }
