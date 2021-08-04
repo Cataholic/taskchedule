@@ -9,11 +9,12 @@ class Storage:
         self.agents = {}
         self.tasks = {}
 
-    def reg_hb(self, agent_id, info):
-        self.agents[agent_id] = {
+    def reg_hb(self, payload):
+        id = payload['id']
+        self.agents[id] = {
             'heartbeat': datetime.datetime.now(),
-            'info': info,
-            'busy': self.agents.get(agent_id, {}).get('busy', False)
+            'info': payload,
+            'busy': self.agents.get(id, {}).get('busy', False)
         }
 
     def get_agents(self):
@@ -25,9 +26,9 @@ class Storage:
         self.tasks[task.id] = task
         return task.id
 
-    def iter_tasks(self, state={WAITING, RUNNING}):
+    def iter_tasks(self,):
         """过滤task状态"""
-        yield from (task for task in self.tasks.values() if task.state in state)
+        yield from (task for task in self.tasks.values() if task.state in {WAITING, RUNNING})
 
     def get_task(self, agent_id):
         for task in self.iter_tasks():

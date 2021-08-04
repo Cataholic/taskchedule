@@ -14,8 +14,7 @@ class ConnectionManager:
         logger.info(type(msg))
         try:
             if msg['type'] in {'register', 'heartbeat'}:
-                self.storage.reg_hb(msg['payload']['id'],
-                                    {key: value for key, value in msg['payload'] if key in ['hostname', 'ip']})
+                self.storage.reg_hb(msg['payload'])
                 logger.info("{}".format(self.storage.agents))
             elif msg['type'] == 'result':
                 self.storage.result(msg['payload'])
@@ -23,6 +22,7 @@ class ConnectionManager:
             print(self.storage.get_agents())
             return "ack. {}".format(msg)
         except Exception as e:
+            print(e)
             logger.error("".format(e))
             return "Bad Request."
 
@@ -33,3 +33,6 @@ class ConnectionManager:
 
     def get_task(self, agent_id):
         return self.storage.get_task(agent_id)
+
+    def get_agents(self):
+        return self.storage.get_agents()

@@ -7,6 +7,7 @@ name = "pypi"
 django = "==2.2.3"
 zerorpc = "*"
 netifaces = "*"
+aiohttp = "*"
 
 [dev-packages]
 
